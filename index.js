@@ -1,72 +1,68 @@
-class BaseGame {
-    constructor(title) {
-      this.Title = title;
-      this.minMaxPlayers = [];
-      this.age = 0;
-      this.rating = [];
-      this.genre = [];
-    }
-  
-    getFullInfo() {
-      return `Title: ${this.Title}\nPlayers: ${this.minMaxPlayers.join('-')}\nAge: ${this.age}+\nRating: ${this.countRaiting()}\nGenres: ${this.genre.join(', ')}`;
-    }
-  
-    setMyRaiting(rating) {
-      this.rating.push(rating);
-    }
-  
-    fillDate() {
-      const min = parseInt(prompt('Min players:'));
-      const max = parseInt(prompt('Max players:'));
-      this.minMaxPlayers = [min, max];
-      this.age = parseInt(prompt('Min age:'));
-    }
-  
-    addGenre(genre) {
-      this.genre.push(genre);
-    }
-  
-    countRaiting() {
-      return this.rating.length ? 
-        (this.rating.reduce((a, b) => a + b, 0) / this.rating.length).toFixed(2) : 0;
-    }
-  }
-  
-  class Expansions extends BaseGame {
-    constructor(title, baseGameTitle) {
-      super(title);
-      this.content = '';
-      this.baseGameTitle = baseGameTitle;
-    }
-  
-    getBaseGameName() {
-      return this.baseGameTitle;
-    }
-  }
-  
-  class Collection {
-    constructor(name) {
-      this.collectionName = name;
-      this.gameList = [];
-    }
-  
-    addItem(item) {
-      this.gameList.push(item);
-    }
-  
-    isInCollection(item) {
-      return this.gameList.includes(item);
-    }
-  
-    countList() {
-      return this.gameList.length;
-    }
-  
-    countBaseGames() {
-      return this.gameList.filter(game => game instanceof BaseGame && !(game instanceof Expansions)).length;
-    }
-  
-    countExpansions() {
-      return this.gameList.filter(game => game instanceof Expansions).length;
-    }
-  }
+let score = 0;
+let time = 30;
+let timer;
+let isTimerRunning = false;
+
+const clickBtn = document.getElementById('clickBtn');
+const scoreEl = document.getElementById('score');
+const timerEl = document.getElementById('timer');
+document.getElementById('bgMusic').volume = 0.01;
+
+clickBtn.addEventListener('click', () => {
+    if (!isTimerRunning) startTimer();
+
+    scoreEl.textContent = ++score;
+
+    const effect = document.createElement('div');
+    effect.classList.add('effect');
+    document.body.appendChild(effect);
+
+    setTimeout(() => {
+        effect.remove();
+    }, 1000);
+});
+
+function startTimer() {
+    isTimerRunning = true;
+    timer = setInterval(() => {
+        timerEl.textContent = --time;
+        if (time <= 0) {
+            clearInterval(timer);
+            clickBtn.disabled = true;
+            isTimerRunning = false;
+            document.getElementById('finalScore').textContent = score;
+            document.getElementById('gameOverScreen').classList.remove('hidden');
+        }
+    }, 1000);
+}
+
+window.restartGame = function () {
+    score = 0;
+    time = 30;
+    isTimerRunning = false;
+    scoreEl.textContent = score;
+    timerEl.textContent = time;
+    clickBtn.disabled = false;
+    document.getElementById('gameOverScreen').classList.add('hidden');
+};
+
+
+const collection = new Collection('My game collection');
+
+const game = new BaseGame('Speed Clicker');
+game.minMaxPlayers = [1, 4];
+game.age = 8;
+game.addGenre('Arcade');
+game.setMyRating(5);
+game.setMyRating(4);
+
+const expansion = new Expansions('Clicker Add-on', 'Speed Clicker');
+expansion.addGenre('Competitive');
+
+collection.addItem(game);
+collection.addItem(expansion);
+
+console.log('Game info:', game.getFullInfo());
+console.log('Total in collection:', collection.countList());
+console.log('Base games:', collection.countBaseGames());
+console.log('Expansions:', collection.countExpansions());
