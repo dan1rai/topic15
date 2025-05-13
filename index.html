@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
     <title>Clicker</title>
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
 </head>
 <body>
-    
     <div class="clicker-game">
         <h1>Clicker! Get maximum points in 30 seconds!</h1>
         <div class="stats">
@@ -23,81 +23,11 @@
             <button onclick="restartGame()">Play Again</button>
         </div>
     </div>    
-    
+
     <audio id="bgMusic" src="retro-game-arcade-236133.mp3"></audio>
     <button class="music-btn" onclick="document.getElementById('bgMusic').play()">🎵 Music</button>
 
-    <script src="index.js"></script>
-    <script>
-        let score = 0;
-        let time = 30;
-        let timer;
-        let isTimerRunning = false;
-
-        const clickBtn = document.getElementById('clickBtn');
-        const scoreEl = document.getElementById('score');
-        const timerEl = document.getElementById('timer');
-
-        document.getElementById('bgMusic').volume = 0.01;
-
-        clickBtn.addEventListener('click', () => {
-            if (!isTimerRunning) startTimer();
-
-            scoreEl.textContent = ++score;
-
-            const effect = document.createElement('div');
-            effect.classList.add('effect');
-            document.body.appendChild(effect);
-
-            setTimeout(() => {
-                effect.remove();
-            }, 1000);
-        });
-
-        function startTimer() {
-            isTimerRunning = true;
-            timer = setInterval(() => {
-                timerEl.textContent = --time;
-                if (time <= 0) {
-                    clearInterval(timer);
-                    clickBtn.disabled = true;
-                    isTimerRunning = false;
-                    document.getElementById('finalScore').textContent = score;
-                    document.getElementById('gameOverScreen').classList.remove('hidden');
-                }
-            }, 1000);
-        }
-
-        function restartGame() {
-            score = 0;
-            time = 30;
-            isTimerRunning = false;
-            scoreEl.textContent = score;
-            timerEl.textContent = time;
-            clickBtn.disabled = false;
-            document.getElementById('gameOverScreen').classList.add('hidden');
-        }
-
-        
-        const collection = new Collection('My game collection');
-
-        const game = new BaseGame('Speed Clicker');
-        game.minMaxPlayers = [1, 4];
-        game.age = 8;
-        game.addGenre('Arkada');
-        game.setMyRaiting(5);
-        game.setMyRaiting(4);
-
-        const expansion = new Expansions('Clicker Add-on', 'Speed ​​Clicks');
-        expansion.addGenre('Competitive');
-
-        collection.addItem(game);
-        collection.addItem(expansion);
-
-        console.log('Game info:', game.getFullInfo());
-        console.log('Total in collection:', collection.countList());
-        console.log('Base games:', collection.countBaseGames());
-        console.log('Complement:', collection.countExpansions());
-    </script>
+   
+    <script src="main.js"></script>
 </body>
 </html>
