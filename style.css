@@ -1,0 +1,156 @@
+body {
+    background-color: #000000;
+}
+
+.clicker-game {
+    text-align: center;
+    margin: 30px;
+    color: #ffffff;
+}
+
+#clickBtn {
+    padding: 20px 40px;
+    font-size: 24px;
+    cursor: pointer;
+    background: #ffffff;
+    color: rgb(0, 0, 0);
+    border: none;
+    border-radius: 50px;
+}
+
+.stats {
+    font-size: 24px;
+    margin: 20px;
+    color: #ffffff;
+}
+
+
+
+.music-btn {
+    background: linear-gradient(to right, #ffffff, #ffffff);
+    border: none;
+    color: rgb(0, 0, 0);
+    padding: 15px 15px;
+    text-align: center;
+    text-decoration: none;
+    display: block;
+    margin: 20px auto;
+    font-size: 15px;
+    margin-top: 20px;
+    border-radius: 50px;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    transition: all 0.3s ease;
+}
+
+
+.music-btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 14px rgba(0, 0, 0, 0.4);
+}
+
+h1, .stats {
+    font-family: 'Press Start 2P', cursive;
+}
+h1, .music-btn {
+    font-family: 'Press Start 2P', cursive;
+}
+h1, #clickBtn {
+    font-family: 'Press Start 2P', cursive;
+}
+
+
+.effect {
+    position: absolute;
+    width: 1000px;
+    height: 1000px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0));
+    pointer-events: none;
+    animation: burst 0.5s forwards;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+   
+
+@keyframes burst {
+    0% {
+        transform: translate(-50%, -50%) scale(0);
+        opacity: 1;
+    }
+    100% {
+        transform: translate(-50%, -50%) scale(4);
+        opacity: 0;
+    }
+}
+
+
+.hidden {
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.5s;
+}
+
+
+
+#gameOverScreen {
+    
+    
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.8);
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+
+    
+}
+
+
+
+
+.game-over-box {
+    background: #ffffff;
+    color: #000000;
+    padding: 40px;
+    border-radius: 20px;
+    text-align: center;
+    font-family: 'Press Start 2P', cursive;
+    box-shadow: 0 10px 30px rgba(255, 255, 255, 0.2);
+    animation: scaleUp 0.5s ease forwards;
+}
+
+
+.game-over-box button {
+    font-family: 'Press Start 2P', cursive;
+    margin-top: 20px;
+    padding: 10px 30px;
+    font-size: 16px;
+    cursor: pointer;
+    background-color: #ffffff;
+    color: rgb(0, 0, 0);
+    border: none;
+    border-radius: 10px;
+    transition: 0.3s ease;
+}
+
+.game-over-box button:hover {
+    background-color: #ffffff;
+}
+
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes scaleUp {
+    from { transform: scale(0.7); }
+    to { transform: scale(1); }
+}
